@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Date    : 2022-11-05 09:16:34
 # @Author  : Chenghao Mou (mouchenghao@gmail.com)
+import os
 import argparse
 
 
@@ -22,7 +23,7 @@ def add_io_args(parser: argparse.ArgumentParser) -> argparse.ArgumentParser:  # 
     parser.add_argument("--path", type=str, help="`path` in load_dataset", required=True),
     parser.add_argument("--name", type=str, help="`name` in load_dataset"),
     parser.add_argument("--data_dir", type=str, help="`data_dir` in load_dataset"),
-    parser.add_argument("--data_files", type=str, help="`data_files` in load_dataset"),
+    parser.add_argument("--data_files", type=str, nargs="+", help="`data_files` in load_dataset"),
     parser.add_argument("--split", type=str, help="`split` in load_dataset"),
     parser.add_argument("--cache_dir", type=str, help="`cache_dir` in load_dataset", default=".cache"),
     parser.add_argument("--revision", type=str, help="`revision` in load_dataset"),
@@ -62,6 +63,12 @@ def add_meta_args(parser: argparse.ArgumentParser) -> argparse.ArgumentParser:  
         type=int,
         help="""Batch size to use for dataset iteration. Mainly for memory efficiency.""",
         default=10000,
+    ),
+    parser.add_argument(
+        "--num_proc",
+        type=int,
+        help="""Number of processes to use""",
+        default=os.cpu_count(),
     ),
     return parser
 
